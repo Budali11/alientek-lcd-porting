@@ -356,8 +356,6 @@ make -j12 #如果你用压缩包
 
 笔者在完成移植时，参考了一些文档：
 
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/devicetree/bindings/display/fsl,lcdif.yaml?h=v6.6.141	"设备树绑定文档fsl,lcdif.yaml"
-
-[2]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/devicetree/bindings/media/video-interfaces.yaml?h=v6.6.141	"设备树绑定文档video-interfaces.yaml"
-
-[3]: https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/graph.yaml	"dt-schema项目-graph.yaml"
+1. [设备树绑定文档 fsl,lcdif.yaml](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/devicetree/bindings/display/fsl,lcdif.yaml?h=v6.6.141)
+2. [设备树绑定文档 video-interfaces.yaml](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/devicetree/bindings/media/video-interfaces.yaml?h=v6.6.141)
+3. [dt-schema项目 graph.yaml](https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/graph.yaml)
