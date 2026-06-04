@@ -6,7 +6,7 @@
 
 <img src="./figure/image-20260604154655522.png" alt="开发板" />
 
-![LCD模块](F:\Users\budali11\Documents\work\atk4384\figure\image-20260604154904740.png)
+<img src="./figure/image-20260604154904740.png" alt="LCD模块" />
 
 ## 具体步骤
 
