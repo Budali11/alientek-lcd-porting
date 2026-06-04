@@ -1,0 +1,176 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+//
+// Copyright (C) 2016 Freescale Semiconductor, Inc.
+
+/dts-v1/;
+
+#include "imx6ull.dtsi"
+#include "imx6ul-14x14-evk.dtsi"
+
+/ {
+	model = "Freescale i.MX6 UltraLiteLite 14x14 EVK Board";
+	compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+};
+
+&clks {
+	assigned-clocks = <&clks IMX6UL_CLK_PLL3_PFD2>;
+	assigned-clock-rates = <320000000>;
+};
+
+&pinctrl_spi4 {
+	fsl,pins = <
+		MX6UL_PAD_BOOT_MODE0__GPIO5_IO10	0x70a1
+		MX6UL_PAD_BOOT_MODE1__GPIO5_IO11	0x70a1
+	>;
+};
+
+&{/spi-4} {
+	/delete-property/ cs-gpios;
+};
+
+&gpio_spi {
+	/delete-property/ enable-gpios;
+};
+
+&iomuxc_snvs {
+	pinctrl_enet1_reset: enet1resetgrp {
+		fsl,pins = <MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07 0x10B0>;
+	};
+	
+	pinctrl_enet2_reset: enet2resetgrp {
+		fsl,pins = <MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08 0x10B0>;
+	};
+};
+
+&pinctrl_enet1 {
+	fsl,pins = <
+		MX6UL_PAD_ENET1_RX_EN__ENET1_RX_EN	0x1b0b0
+		MX6UL_PAD_ENET1_RX_ER__ENET1_RX_ER	0x1b0b0
+		MX6UL_PAD_ENET1_RX_DATA0__ENET1_RDATA00	0x1b0b0
+		MX6UL_PAD_ENET1_RX_DATA1__ENET1_RDATA01	0x1b0b0
+		MX6UL_PAD_ENET1_TX_EN__ENET1_TX_EN	0x1b0b0
+		MX6UL_PAD_ENET1_TX_DATA0__ENET1_TDATA00	0x1b0b0
+		MX6UL_PAD_ENET1_TX_DATA1__ENET1_TDATA01	0x1b0b0
+		MX6UL_PAD_ENET1_TX_CLK__ENET1_REF_CLK1	0x4001b009
+	>;
+};
+
+&pinctrl_enet2 {
+	fsl,pins = <
+		MX6UL_PAD_GPIO1_IO07__ENET2_MDC		0x1b0b0
+		MX6UL_PAD_GPIO1_IO06__ENET2_MDIO	0x1b0b0
+		MX6UL_PAD_ENET2_RX_EN__ENET2_RX_EN	0x1b0b0
+		MX6UL_PAD_ENET2_RX_ER__ENET2_RX_ER	0x1b0b0
+		MX6UL_PAD_ENET2_RX_DATA0__ENET2_RDATA00	0x1b0b0
+		MX6UL_PAD_ENET2_RX_DATA1__ENET2_RDATA01	0x1b0b0
+		MX6UL_PAD_ENET2_TX_EN__ENET2_TX_EN	0x1b0b0
+		MX6UL_PAD_ENET2_TX_DATA0__ENET2_TDATA00	0x1b0b0
+		MX6UL_PAD_ENET2_TX_DATA1__ENET2_TDATA01	0x1b0b0
+		MX6UL_PAD_ENET2_TX_CLK__ENET2_REF_CLK2	0x4001b009
+	>;
+};
+
+&fec1 {
+	phy-reset-gpios = <&gpio5 7 GPIO_ACTIVE_LOW>;
+	pinctrl-0 = <&pinctrl_enet1 &pinctrl_enet1_reset>;
+	phy-reset-duration = <200>;
+};
+
+&fec2 {
+	phy-reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+	pinctrl-0 = <&pinctrl_enet2 &pinctrl_enet2_reset>;
+	phy-reset-duration = <200>;
+};
+
+&ethphy0 {
+	compatible = "ethernet-phy-ieee802.3-c22";
+	reg = <0>;
+	smsc,disable-energy-detect;
+};
+
+&ethphy1 {
+	compatible = "ethernet-phy-ieee802.3-c22";
+	reg = <1>;
+	smsc,disable-energy-detect;
+};
+
+&tsc {
+	status = "disable";
+};
+
+&pinctrl_tsc {
+	/delete-property/ fsl,pins;
+};
+
+&iomuxc {
+	pinctrl_myled: myledgrp {
+		fsl,pins = <
+			MX6UL_PAD_GPIO1_IO03__GPIO1_IO03 0x10b0
+		>;
+	};
+	pinctrl_mykey: mykeygrp {
+		fsl,pins = <
+			MX6UL_PAD_UART1_CTS_B__GPIO1_IO18 0xf080
+		>;
+	};
+};
+
+&pinctrl_lcdif_ctrl {
+	fsl,pins = <
+		MX6UL_PAD_LCD_CLK__LCDIF_CLK	      0x79
+		MX6UL_PAD_LCD_ENABLE__LCDIF_ENABLE  0x79
+		MX6UL_PAD_LCD_HSYNC__LCDIF_HSYNC    0x79
+		MX6UL_PAD_LCD_VSYNC__LCDIF_VSYNC    0x79
+    MX6UL_PAD_LCD_RESET__LCDIF_RESET    0x79
+	>;
+};
+
+&lcdif {
+	assigned-clocks = <&clks IMX6UL_CLK_LCDIF_PRE_SEL>;
+	assigned-clock-parents = <&clks IMX6UL_CLK_PLL5_VIDEO_DIV>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_lcdif_dat
+		     &pinctrl_lcdif_ctrl>;
+	status = "okay";
+
+	port {
+		display_out: endpoint {
+			remote-endpoint = <&panel_in>;
+      bus-type = <7>;
+      bus-width = <24>;
+		};
+	};
+};
+
+&{/panel} {
+	compatible = "alientek,atk4384";
+	backlight = <&backlight_display>;
+
+  panel-timing {
+    clock-frequency = <9200000>;
+    hactive         = <800>;
+    vactive         = <480>;
+    hfront-porch    = <8>;
+    hback-porch     = <4>;
+    hsync-len       = <41>;
+    vfront-porch    = <4>;
+    vback-porch     = <2>;
+    vsync-len       = <10>;
+    hsync-active    = <0>;
+    vsync-active    = <0>;
+    de-active       = <1>;
+    pixelclk-active = <0>;
+  };
+
+	port {
+		panel_in: endpoint {
+			remote-endpoint = <&display_out>;
+      // bus-type = <7>;
+      // bus-width = <24>;
+		};
+	};
+};
+
+&wdog1 {
+  status = "disabled";
+};
